@@ -15,6 +15,11 @@ using CleanWave_Backend.iam.Infrastructure.Tokens.JWT.Configuration;
 using CleanWave_Backend.iam.Infrastructure.Tokens.JWT.Services;
 using CleanWave_Backend.iam.Interfaces.ACL;
 using CleanWave_Backend.iam.Interfaces.ACL.Services;
+using CleanWave_Backend.Profiles.Application.Internal.CommandServices;
+using CleanWave_Backend.Profiles.Application.Internal.QueryServices;
+using CleanWave_Backend.Profiles.Domain.Repositories;
+using CleanWave_Backend.Profiles.Domain.Services;
+using CleanWave_Backend.Profiles.Infraestructure.Persistence.EFC.Repositories;
 using CleanWave_Backend.Shared.Domain.Repositories;
 using CleanWave_Backend.Shared.Infraestructure.Persistence.EFC.Configuration;
 using CleanWave_Backend.Shared.Infraestructure.Persistence.EFC.Repositories;
@@ -132,6 +137,15 @@ builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRequestCommandServices, RequestCommandService>();
 builder.Services.AddScoped<IRequestQueryServices, RequestQueryService>();
 
+// Customer Bounded Context Injection Configuration
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerQueryService, CustomerQueryService>();
+builder.Services.AddScoped<ICustomerCommandService, CustomerCommandServices>();
+
+// Cleaning Entrepreneur Bounded Context Injection Configuration
+builder.Services.AddScoped<ICleaningEntrepreneurRepository, CleaningEntrepreneurRepository>();
+builder.Services.AddScoped<ICleaningEntrepreneurQueryService, CleaningEntrepreneurQueryService>();
+builder.Services.AddScoped<ICleaningEntrepreneurCommandService, CleaningEntrepreneurCommandService>();
 var app = builder.Build();
 
 // Verify Database Objects are created

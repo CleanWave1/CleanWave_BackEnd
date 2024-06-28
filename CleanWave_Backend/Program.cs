@@ -1,3 +1,8 @@
+using CleanWave_Backend.Booking.Application.CommandServices;
+using CleanWave_Backend.Booking.Application.QueryServices;
+using CleanWave_Backend.Booking.Domain.Repositories;
+using CleanWave_Backend.Booking.Domain.Services;
+using CleanWave_Backend.Booking.Infraestructure.Persistence.EFC.Repositories;
 using CleanWave_Backend.iam.Application.CommandServices;
 using CleanWave_Backend.iam.Application.OutboundServices;
 using CleanWave_Backend.iam.Application.QueryServices;
@@ -111,8 +116,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // IAM Bounded Context Injection Configuration
-// TokenSettings Configuration
 
+// TokenSettings Configuration
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -122,6 +127,10 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 
+// Booking Bounded Context Injection Configuration
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<IRequestCommandServices, RequestCommandService>();
+builder.Services.AddScoped<IRequestQueryServices, RequestQueryService>();
 
 var app = builder.Build();
 

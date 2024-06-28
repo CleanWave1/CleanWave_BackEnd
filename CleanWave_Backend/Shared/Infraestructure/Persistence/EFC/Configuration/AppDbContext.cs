@@ -1,4 +1,5 @@
-﻿using CleanWave_Backend.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
+﻿using CleanWave_Backend.iam.Domain.Model.Aggregates;
+using CleanWave_Backend.Shared.Infraestructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,5 +18,10 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
         // Apply SnakeCase Naming Convention
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
+        //iam context
+        builder.Entity<User>().HasKey(u => u.Id);
+        builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<User>().Property(u => u.Username).IsRequired();
+        builder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
     }
 }
